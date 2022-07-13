@@ -21,7 +21,8 @@ const gameSchema = new Schema({
     ],
     is_child_game: {type: Boolean, default: false},
     parent_game: {type: Schema.Types.ObjectId, ref: 'game'},
-    child_games: [{type: Schema.Types.ObjectId, ref: 'game'}]
+    child_games: [{type: Schema.Types.ObjectId, ref: 'game'}],
+    comments: [{type: Schema.Types.ObjectId, ref: 'comment'}]
 }, {
     timestamps: true
 });
