@@ -44,7 +44,7 @@ contestantRouter.route('/:contestantId')
 })
 .put(verifyUser, async (req, res, next) => {
     try {
-        const oContestant = await Genre.findByIdAndUpdate(req.params.contestantId, {$set: req.body}, { new: true });
+        const oContestant = await Contestant.findByIdAndUpdate(req.params.contestantId, {$set: req.body}, { new: true });
         if (!oContestant) throw new Error(`Contestant not found for id ${req.params.contestantId}`);
         res.json(200, oContestant);
     } catch (error) {

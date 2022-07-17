@@ -44,7 +44,7 @@ profileRouter.route('/:profileId')
 })
 .put(verifyUser, async (req, res, next) => {
     try {
-        const oProfile = await Genre.findByIdAndUpdate(req.params.profileId, {$set: req.body}, { new: true });
+        const oProfile = await Comment.findByIdAndUpdate(req.params.profileId, {$set: req.body}, { new: true });
         if (!oProfile) throw new Error(`Profile not found for id ${req.params.profileId}`);
         res.json(200, oProfile);
     } catch (error) {
