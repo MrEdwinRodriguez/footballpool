@@ -10,6 +10,8 @@ const profileRouter = require('./routes/profileRouter');
 const contestantRouter = require('./routes/contestantRouter');
 const commentRouter = require('./routes/commentRouter');
 const gameRouter = require('./routes/gameRouter');
+const typeRouter = require('./routes/typeRouter');
+const teamRouter = require('./routes/teamRouter');
 
 var app = express();
 
@@ -29,6 +31,8 @@ app.use('/profile', profileRouter);
 app.use('/contestant', contestantRouter);
 app.use('/comment', commentRouter);
 app.use('/game', gameRouter);
+app.use('/type', typeRouter);
+app.use('/team', teamRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
