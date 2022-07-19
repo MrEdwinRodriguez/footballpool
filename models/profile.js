@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const profileSchema = new Schema({
-    user: {type: mongoose.Schema.Types.type, ref: 'user'},
+    user: {type: mongoose.Schema.Types.ObjectId, ref: 'user'},
     ranking: {type: Number, default: 0},
     username: {type: String, unique: true, required: true},
     bio: String,

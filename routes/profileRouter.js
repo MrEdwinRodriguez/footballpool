@@ -1,6 +1,7 @@
 const express = require('express');
 const profileRouter = express.Router();
 const Profile = require('../models/profile');
+const {verifyUser} = require('../authenticate')
 
 profileRouter.route('/')
 .get(async (req, res, next) => {
@@ -11,7 +12,7 @@ profileRouter.route('/')
         next(error)
     }
 })
-.post(async (req, res, next) => {
+.post(verifyUser, async (req, res, next) => {
     try {
         const newProfile = await  Profile.create(req.body).populate('user').exec();
         res.status(200).json(newProfile);
