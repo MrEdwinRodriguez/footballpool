@@ -1,6 +1,7 @@
 const express = require('express');
 const teamRouter = express.Router();
 const Team = require('../models/team');
+const {verifyUser} = require('../authenticate')
 
 teamRouter.route('/')
 .get(async (req, res, next) => {
@@ -11,7 +12,7 @@ teamRouter.route('/')
         next(error)
     }
 })
-.post(async (req, res, next) => {
+.post(verifyUser, async (req, res, next) => {
     try {
         const newTeam = await  Team.create(req.body).populate('user').exec();
         res.status(200).json(newTeam);

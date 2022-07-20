@@ -1,6 +1,7 @@
 const express = require('express');
 const contestantRouter = express.Router();
 const Contestant = require('../models/contestant');
+const {verifyUser} = require('../authenticate')
 
 contestantRouter.route('/')
 .get(async (req, res, next) => {
@@ -11,7 +12,7 @@ contestantRouter.route('/')
         next(error)
     }
 })
-.post(async (req, res, next) => {
+.post(verifyUser, async (req, res, next) => {
     try {
         const newContestant = await  Contestant.create(req.body).exec();
         res.status(200).json(newContestant);
@@ -23,13 +24,13 @@ contestantRouter.route('/')
     res.statusCode = 403;
     res.end('PUT operation not supported on /contestant');
 })
-.delete( async (req, res, next) => {
+.delete(async (req, res, next) => {
     res.statusCode = 403;
     res.end('Delete operation not supported on /contestant');
 });
 
 contestantRouter.route('/:contestantId')
-.get(async (req, res, next) => {
+.get(verifyUser, async (req, res, next) => {
     try {
         oContestant = await Contestant.findById(req.params.contestantId).populate('user game').exec();
         if (!oContestant) throw new Error('Contestant not found')

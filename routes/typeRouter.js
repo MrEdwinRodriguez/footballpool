@@ -1,6 +1,7 @@
 const express = require('express');
 const typeRouter = express.Router();
 const Type = require('../models/type');
+const {verifyUser} = require('../authenticate')
 
 typeRouter.route('/')
 .get(async (req, res, next) => {
@@ -11,7 +12,7 @@ typeRouter.route('/')
         next(error)
     }
 })
-.post(async (req, res, next) => {
+.post(verifyUser, async (req, res, next) => {
     try {
         const newType = await  Type.create(req.body).populate('user').exec();
         res.status(200).json(newType);

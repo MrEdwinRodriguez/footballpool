@@ -1,6 +1,7 @@
 const express = require('express');
 const gameRouter = express.Router();
 const Game = require('../models/game');
+const {verifyUser} = require('../authenticate')
 
 gameRouter.route('/')
 .get(async (req, res, next) => {
@@ -11,7 +12,7 @@ gameRouter.route('/')
         next(error)
     }
 })
-.post(async (req, res, next) => {
+.post(verifyUser, async (req, res, next) => {
     try {
         const newGame = await Game.create(req.body).populate('user').exec();
         res.status(200).json(newGame);

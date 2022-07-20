@@ -1,6 +1,7 @@
 const express = require('express');
 const commentRouter = express.Router();
 const Comment = require('../models/comment');
+const {verifyUser} = require('../authenticate');
 
 commentRouter.route('/')
 .get(async (req, res, next) => {
@@ -11,7 +12,7 @@ commentRouter.route('/')
         next(error)
     }
 })
-.post(async (req, res, next) => {
+.post(verifyUser, async (req, res, next) => {
     try {
         const newComment = await  Comment.create(req.body).populate('user').exec();
         res.status(200).json(newComment);
