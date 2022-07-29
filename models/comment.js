@@ -3,7 +3,8 @@ const Schema = mongoose.Schema;
 
 const actionSchema = new Schema({
     user: { type: Schema.Types.ObjectId, ref: 'users'},
-    action: {type: String, enum: ['like', 'dislike']},
+    like: {type: Boolean, default: false },
+    dislike: {type: Boolean, default: false },
 })
 
 const commentSchema = new Schema({
