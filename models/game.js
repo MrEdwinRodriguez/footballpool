@@ -6,7 +6,7 @@ const gameSchema = new Schema({
     created_by: {type: mongoose.Schema.Types.ObjectId, ref: 'user'},
     winner: {type: mongoose.Schema.Types.ObjectId, ref: 'user'},
     contestants: [{ type: mongoose.Schema.Types.ObjectId, ref: 'contestant'}],
-    week: String,
+    week: Number,
     is_year_long: {type: Boolean, default: false},
     is_playoffs: {type: Boolean, default: false},
     football_games: [
