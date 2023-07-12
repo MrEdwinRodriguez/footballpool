@@ -2,6 +2,8 @@ import React from 'react';
 import { Container, Navbar, NavbarBrand, Nav } from 'reactstrap';
 import logo from './logo.svg';
 import Header from './components/Header';
+import Dashboard from './components/Dashboard';
+
 import { Counter } from './features/counter/Counter';
 import './App.css';
 
@@ -10,7 +12,7 @@ function App() {
     <div className="App">
 		<Header/>
 		<Container>
-			<div>BODY GOES HERE</div>
+			<Dashboard/>
 		</Container>
    </div>
   );

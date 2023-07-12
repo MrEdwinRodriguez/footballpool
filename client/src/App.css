@@ -18,6 +18,13 @@ h2 {
     color: #3046c5;
 }
 
+.padl30 {
+	padding-left: 30px !important;
+}
+
+.wide {
+	width: 100%;
+}
 .card-img-overlay .card-title {
     color: white;
     background-color: rgba(0, 0, 0, 0.5);
