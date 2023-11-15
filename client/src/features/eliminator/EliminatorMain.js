@@ -5,10 +5,12 @@ import { Col, Row, Button,
 	DropdownMenu,
 	DropdownItem} from 'reactstrap';
 import Game from './Game';
+import DropdownItemComponent from './DropdownItemComponent';
 const EliminatorMain = () => {
 	const [dropdownOpen, setDropdownOpen] = useState(false);
 	const [caretDirection, updateCaretDirection] = useState('down');
-	const [currentWeek, updateCurrentWeek] = useState('Select Week')
+	const [currentWeek, updateCurrentWeek] = useState('Select Week');
+	const weekArray  = Array(18).fill().map((v,i)=>i+1);
 	const toggle = () => {
 		setDropdownOpen(!dropdownOpen);
 		updateCaretDirection(dropdownOpen ? 'up': "down");
@@ -29,26 +31,18 @@ const EliminatorMain = () => {
 	  <>
 	   <Dropdown isOpen={dropdownOpen} toggle={toggle} direction={caretDirection}>
 			<DropdownToggle caret>{currentWeek}</DropdownToggle>
-			<DropdownMenu >
-			<DropdownItem value={1} onClick={selectWeek}>Week 1</DropdownItem>
-			<DropdownItem value={2} onClick={selectWeek}>Week 2</DropdownItem>
-			<DropdownItem value={3} onClick={selectWeek}>Week 3</DropdownItem>
-			<DropdownItem value={4} onClick={selectWeek}>Week 4</DropdownItem>
-			<DropdownItem value={5} onClick={selectWeek}>Week 5</DropdownItem>
-			<DropdownItem value={6} onClick={selectWeek}>Week 6</DropdownItem>
-			<DropdownItem value={7} onClick={selectWeek}>Week 7</DropdownItem>
+			<DropdownMenu style={{"maxHeight": "200px", "overflow":"auto"}}>
+				{weekArray.map(week => {
+					console.log(week)
+					return <DropdownItemComponent value={week} selectWeek={selectWeek} />
+				})}
 			</DropdownMenu>
 		</Dropdown>
+		{/* TODO:  iterate through matchups and return Game */}
 		<Game pickTeam={pickTeam} home={"New York Giants"} visitor={"New York Giants"}/>
 		<Game pickTeam={pickTeam} home={"Dallas Cowboys"} visitor={"Tampa Bay Bucs"}/>
 		<Game pickTeam={pickTeam} home={"Philadelphia Eagles"} visitor={"New England Patriots"}/>
-		{/* <Row style={{"padding-top": "30px"}}>
-			<Col xs="2"></Col>
-			<Col xs="2">Sunday 12/12/2023</Col>
-			<Col xs="2"><Button data-team={'Giants'} onClick={pickTeam}>New York Giants </Button><span style={{"float": "right"}}>@</span></Col>
-			<Col xs="2"><Button  data-team={'Jets'} onClick={pickTeam}>New York Jets</Button></Col>
-			<Col xs="1">Jets -4</Col>
-		</Row> */}
+
 	</>
   )
 }

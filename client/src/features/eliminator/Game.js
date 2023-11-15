@@ -10,8 +10,8 @@ function Game({pickTeam, home, visitor}) {
 		<Row style={{"padding-top": "30px"}}>
 			<Col xs="2" md="2"></Col>
 			<Col xs="12" md="2">Sunday 12/12/2023</Col>
-			<Col xs="6" md="3"><Button data-team={visitor} onClick={handleClick}>{visitor}</Button><span style={{"float": "right"}}>@</span></Col>
-			<Col xs="6" md="3"><Button  data-team={home} onClick={handleClick}>{home}</Button></Col>
+			<Col xs="6" md="3"><Button data-team={visitor} onClick={handleClick} style={{"width": "200px"}}>{visitor}</Button><span style={{"float": "right", "margin-right": "30px"}}>@</span></Col>
+			<Col xs="6" md="3"><Button  data-team={home} onClick={handleClick} style={{"width": "200px"}}>{home}</Button></Col>
 			<Col xs="12" md="2">Jets -4</Col>
 		</Row>
   	)
