@@ -1,10 +1,12 @@
 const express = require('express');
 const teamRouter = express.Router();
 const Team = require('../models/team');
-const {verifyUser} = require('../authenticate')
+const {verifyUser} = require('../authenticate');
+const cors = require('./cors');
 
 teamRouter.route('/')
-.get(async (req, res, next) => {
+.options(cors.corsWithOptions, (req, res) => res.sendStatus(200))
+.get(cors.cors, async (req, res, next) => {
     try {
         const aTeams = await  Team.find().populate('user').exec();
         res.status(200).json(aTeams);
@@ -12,7 +14,7 @@ teamRouter.route('/')
         next(error)
     }
 })
-.post(verifyUser, async (req, res, next) => {
+.post(cors.corsWithOptions, verifyUser, async (req, res, next) => {
     try {
         const newTeam = await  Team.create(req.body).populate('user').exec();
         res.status(200).json(newTeam);
@@ -20,17 +22,18 @@ teamRouter.route('/')
         next(error)
     }
 })
-.put(async (req, res, next) => {
+.put(cors.corsWithOptions, async (req, res, next) => {
     res.statusCode = 403;
     res.end('PUT operation not supported on /team');
 })
-.delete( async (req, res, next) => {
+.delete(cors.corsWithOptions, async (req, res, next) => {
     res.statusCode = 403;
     res.end('Delete operation not supported on /team');
 });
 
 teamRouter.route('/:teamId')
-.get(async (req, res, next) => {
+.options(cors.corsWithOptions, (req, res) => res.sendStatus(200))
+.get(cors.cors, async (req, res, next) => {
     try {
         oTeam = await Team.findById(req.params.teamId).populate('user').exec();
         if (!oTeam) throw new Error('Team not found')
@@ -39,11 +42,11 @@ teamRouter.route('/:teamId')
         next(error)
     }
 })
-.post(async (req, res, next) => {
+.post(cors.corsWithOptions, async (req, res, next) => {
     res.statusCode = 403;
     res.end('post operation not supported on /team/:teamId');
 })
-.put(verifyUser, async (req, res, next) => {
+.put(cors.corsWithOptions, verifyUser, async (req, res, next) => {
     try {
         const oTeam = await Comment.findByIdAndUpdate(req.params.teamId, {$set: req.body}, { new: true });
         if (!oTeam) throw new Error(`Team not found for id ${req.params.teamId}`);
@@ -52,7 +55,7 @@ teamRouter.route('/:teamId')
         next(error);
     }
 })
-.delete(verifyUser, async (req, res, next) => {
+.delete(cors.corsWithOptions, verifyUser, async (req, res, next) => {
     try {
         const response = await Team.findByIdAndDelete(req.params.teamId)
         res.status(200).json({_id: response._id});

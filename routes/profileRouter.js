@@ -2,9 +2,11 @@ const express = require('express');
 const profileRouter = express.Router();
 const Profile = require('../models/profile');
 const {verifyUser} = require('../authenticate')
+const cors = require('./cors');
 
 profileRouter.route('/')
-.get(async (req, res, next) => {
+.options(cors.corsWithOptions, (req, res) => res.sendStatus(200))
+.get(cors.cors, async (req, res, next) => {
     try {
         const aProfiles = await  Profile.find().populate('user').exec();
         res.status(200).json(aProfiles);
@@ -12,7 +14,7 @@ profileRouter.route('/')
         next(error)
     }
 })
-.post(verifyUser, async (req, res, next) => {
+.post(cors.corsWithOptions, verifyUser, async (req, res, next) => {
     try {
         const newProfile = await  Profile.create(req.body).populate('user').exec();
         res.status(200).json(newProfile);
@@ -20,17 +22,18 @@ profileRouter.route('/')
         next(error)
     }
 })
-.put(async (req, res, next) => {
+.put(cors.corsWithOptions, async (req, res, next) => {
     res.statusCode = 403;
     res.end('PUT operation not supported on /profile');
 })
-.delete( async (req, res, next) => {
+.delete(cors.corsWithOptions, async (req, res, next) => {
     res.statusCode = 403;
     res.end('Delete operation not supported on /profile');
 });
 
 profileRouter.route('/:profileId')
-.get(async (req, res, next) => {
+.options(cors.corsWithOptions, (req, res) => res.sendStatus(200))
+.get(cors.cors, async (req, res, next) => {
     try {
         oProfile = await Profile.findById(req.params.profileId).populate('user').exec();
         if (!oProfile) throw new Error('Profile not found')
@@ -39,11 +42,11 @@ profileRouter.route('/:profileId')
         next(error)
     }
 })
-.post(async (req, res, next) => {
+.post(cors.corsWithOptions, async (req, res, next) => {
     res.statusCode = 403;
     res.end('post operation not supported on /profile/:profileId');
 })
-.put(verifyUser, async (req, res, next) => {
+.put(cors.corsWithOptions, verifyUser, async (req, res, next) => {
     try {
         const oProfile = await Comment.findByIdAndUpdate(req.params.profileId, {$set: req.body}, { new: true });
         if (!oProfile) throw new Error(`Profile not found for id ${req.params.profileId}`);
@@ -52,7 +55,7 @@ profileRouter.route('/:profileId')
         next(error);
     }
 })
-.delete(verifyUser, async (req, res, next) => {
+.delete(cors.corsWithOptions, verifyUser, async (req, res, next) => {
     try {
         const response = await Profile.findByIdAndDelete(req.params.profileId)
         res.status(200).json({_id: response._id});

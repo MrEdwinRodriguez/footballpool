@@ -2,9 +2,11 @@ const express = require('express');
 const commentRouter = express.Router();
 const Comment = require('../models/comment');
 const {verifyUser} = require('../authenticate');
+const cors = require('./cors');
 
 commentRouter.route('/')
-.get(async (req, res, next) => {
+.options(cors.corsWithOptions, (req, res) => res.sendStatus(200))
+.get(cors.cors, async (req, res, next) => {
     try {
         const aComments = await  Comment.find().populate('user').exec();
         res.status(200).json(aComments);
@@ -12,7 +14,7 @@ commentRouter.route('/')
         next(error)
     }
 })
-.post(verifyUser, async (req, res, next) => {
+.post(cors.corsWithOptions, verifyUser, async (req, res, next) => {
     try {
         const newComment = await  Comment.create(req.body).populate('user').exec();
         res.status(200).json(newComment);
@@ -20,17 +22,18 @@ commentRouter.route('/')
         next(error)
     }
 })
-.put(async (req, res, next) => {
+.put(cors.corsWithOptions, async (req, res, next) => {
     res.statusCode = 403;
     res.end('PUT operation not supported on /comment');
 })
-.delete( async (req, res, next) => {
+.delete(cors.corsWithOptions, async (req, res, next) => {
     res.statusCode = 403;
     res.end('Delete operation not supported on /comment');
 });
 
 commentRouter.route('/:commentId')
-.get(async (req, res, next) => {
+.options(cors.corsWithOptions, (req, res) => res.sendStatus(200))
+.get(cors.cors, async (req, res, next) => {
     try {
         oComment = await Comment.findById(req.params.commentId).populate('user').exec();
         if (!oComment) throw new Error('Comment not found')
@@ -39,11 +42,11 @@ commentRouter.route('/:commentId')
         next(error)
     }
 })
-.post(async (req, res, next) => {
+.post(cors.corsWithOptions, async (req, res, next) => {
     res.statusCode = 403;
     res.end('post operation not supported on /comment/:commentId');
 })
-.put(verifyUser, async (req, res, next) => {
+.put(cors.corsWithOptions, verifyUser, async (req, res, next) => {
     try {
         const oComment = await Comment.findByIdAndUpdate(req.params.commentId, {$set: req.body}, { new: true });
         if (!oComment) throw new Error(`Comment not found for id ${req.params.commentId}`);
@@ -52,7 +55,7 @@ commentRouter.route('/:commentId')
         next(error);
     }
 })
-.delete(verifyUser, async (req, res, next) => {
+.delete(cors.corsWithOptions, verifyUser, async (req, res, next) => {
     try {
         const response = await Comment.findByIdAndDelete(req.params.commentId)
         res.status(200).json({_id: response._id});

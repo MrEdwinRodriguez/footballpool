@@ -1,10 +1,12 @@
 const express = require('express');
 const typeRouter = express.Router();
 const Type = require('../models/type');
-const {verifyUser} = require('../authenticate')
+const {verifyUser} = require('../authenticate');
+const cors = require('./cors');
 
 typeRouter.route('/')
-.get(async (req, res, next) => {
+.options(cors.corsWithOptions, (req, res) => res.sendStatus(200))
+.get(cors.cors, async (req, res, next) => {
     try {
         const aTypes = await  Type.find().populate('user').exec();
         res.status(200).json(aTypes);
@@ -12,7 +14,7 @@ typeRouter.route('/')
         next(error)
     }
 })
-.post(verifyUser, async (req, res, next) => {
+.post(cors.corsWithOptions, verifyUser, async (req, res, next) => {
     try {
         const newType = await  Type.create(req.body).populate('user').exec();
         res.status(200).json(newType);
@@ -20,17 +22,18 @@ typeRouter.route('/')
         next(error)
     }
 })
-.put(async (req, res, next) => {
+.put(cors.corsWithOptions, async (req, res, next) => {
     res.statusCode = 403;
     res.end('PUT operation not supported on /type');
 })
-.delete( async (req, res, next) => {
+.delete(cors.corsWithOptions, async (req, res, next) => {
     res.statusCode = 403;
     res.end('Delete operation not supported on /type');
 });
 
 typeRouter.route('/:typeId')
-.get(async (req, res, next) => {
+.options(cors.corsWithOptions, (req, res) => res.sendStatus(200))
+.get(cors.cors, async (req, res, next) => {
     try {
         oType = await Type.findById(req.params.typeId).populate('user').exec();
         if (!oType) throw new Error('Team not found')
@@ -39,11 +42,11 @@ typeRouter.route('/:typeId')
         next(error)
     }
 })
-.post(async (req, res, next) => {
+.post(cors.corsWithOptions, async (req, res, next) => {
     res.statusCode = 403;
     res.end('post operation not supported on /team/:typeId');
 })
-.put(verifyUser, async (req, res, next) => {
+.put(cors.corsWithOptions, verifyUser, async (req, res, next) => {
     try {
         const oType = await Comment.findByIdAndUpdate(req.params.typeId, {$set: req.body}, { new: true });
         if (!oType) throw new Error(`Team not found for id ${req.params.typeId}`);
@@ -52,7 +55,7 @@ typeRouter.route('/:typeId')
         next(error);
     }
 })
-.delete(verifyUser, async (req, res, next) => {
+.delete(cors.corsWithOptions, verifyUser, async (req, res, next) => {
     try {
         const response = await Type.findByIdAndDelete(req.params.typeId)
         res.status(200).json({_id: response._id});
