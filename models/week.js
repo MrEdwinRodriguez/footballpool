@@ -1,0 +1,33 @@
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+
+const weekSchema = new Schema({
+	year: {type: Number, required: true,  defualt: new Date().getFullYear()},
+	league: {type: String, default: 'nfl', enum: ['nfl', 'ncaab']},
+	week: Number, //week of season
+    is_playoffs: {type: Boolean, default: false},
+    schedule: [
+        {
+			name: String,
+			shortName: String,
+			date: Date,
+			vanue: String,
+			City: String,
+			State: String,
+			visitor: String,
+			home: String,
+            // visitor: {type: mongoose.Schema.Types.ObjectId, ref: 'team'}, //to be added later
+            // home: {type: mongoose.Schema.Types.ObjectId, ref: 'team'},//to be added later
+            winner: {type: String, enum: ['visitor', 'home']},
+            visitor_score: Number,
+            home_score: Number,
+			handicap: Number,
+			favorite: {type: mongoose.Schema.Types.ObjectId, ref: 'team'},
+        }
+    ],
+    comments: [{type: Schema.Types.ObjectId, ref: 'comment'}]
+}, {
+    timestamps: true
+});
+
+module.exports = mongoose.model('Week', weekSchema);

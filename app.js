@@ -11,6 +11,7 @@ const commentRouter = require('./routes/commentRouter');
 const gameRouter = require('./routes/gameRouter');
 const typeRouter = require('./routes/typeRouter');
 const teamRouter = require('./routes/teamRouter');
+const weekRouter = require('./routes/weekRouter');
 const passport = require('passport');
 const config = require('./config/config')
 const mongoose = require('mongoose');
@@ -49,6 +50,7 @@ app.use('/comment', commentRouter);
 app.use('/game', gameRouter);
 app.use('/type', typeRouter);
 app.use('/team', teamRouter);
+app.use('/week', weekRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
