@@ -1,6 +1,7 @@
 const express = require('express');
 const weekRouter = express.Router();
 const Week = require('../models/week');
+const Profile = require('../models/profile');
 const {verifyUser} = require('../authenticate');
 const cors = require('./cors');
 const fetch = require('node-fetch');
@@ -72,34 +73,24 @@ weekRouter.route('/schedule/:year')
 .post(cors.cors, async (req, res, next) => {
     try {
 		const url = `https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard?limit=1000&dates=${req.params.year}`;
+		const urlOverFlow = `https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard?limit=1000&dates=${parseInt(req.params.year)+1}`;
 		const response = await fetch(url);
+		const responseOverflow = await fetch(urlOverFlow); //gets scheduled games in January
 		const jsonResponse = await response.json();
+		const jsonResponseOverflow = await responseOverflow.json();
+		jsonResponse.events = jsonResponse.events.concat(jsonResponseOverflow.events);
 		// console.log(jsonResponse);
 		const weeks = {};
 		jsonResponse.events.forEach(event => {
-			console.log(event.competitions)
-			let competition = null;
-			if (Array.isArray(event.competitions) && event.competitions.length > 0) {
-				competition = event.competitions[0];
-			}
-			const homeTeam = competition.competitors.find(competitor => competitor.homeAway === "home");
-			const visitingTeam = competition.competitors.find(competitor => competitor.homeAway === "away");
-			console.log(event.competitions.length)
-			if (weeks[event.week.number]) {
-				weeks[event.week.number].push({
-					name: event.name,
-					shortName: event.shortName,
-					date: new Date(event.date),
-					venue: competition.venue.full_name,
-					city: competition.venue.address.city,
-					state: competition.venue.address.state,
-					home: homeTeam.team.displayName,
-					visitor: visitingTeam.team.displayName,
-				})
-			} else {
-
-				weeks[event.week.number] = [
-					{
+			if (new Date(event.date) > new Date(`08/01/${req.params.year}`) && event.season && event.season.slug == "regular-season") {
+				let competition = null;
+				if (Array.isArray(event.competitions) && event.competitions.length > 0) {
+					competition = event.competitions[0];
+				}
+				const homeTeam = competition.competitors.find(competitor => competitor.homeAway === "home");
+				const visitingTeam = competition.competitors.find(competitor => competitor.homeAway === "away");
+				if (weeks[event.week.number]) {
+					weeks[event.week.number].push({
 						name: event.name,
 						shortName: event.shortName,
 						date: new Date(event.date),
@@ -108,23 +99,38 @@ weekRouter.route('/schedule/:year')
 						state: competition.venue.address.state,
 						home: homeTeam.team.displayName,
 						visitor: visitingTeam.team.displayName,
-						// vanue: String,
-						// City: String,
-						// State: String,
-						// visitor: {type: mongoose.Schema.Types.ObjectId, ref: 'team'},
-						// home: {type: mongoose.Schema.Types.ObjectId, ref: 'team'},
-						// winner: {type: String, enum: ['visitor', 'home']},
-						// visitor_score: Number,
-						// home_score: Number,
-						// handicap: Number,
-						// favorite: {type: mongoose.Schema.Types.ObjectId, ref: 'team'},
-
-
-					}
-				]
+					})
+				} else {
+					weeks[event.week.number] = [
+						{
+							name: event.name,
+							shortName: event.shortName,
+							date: new Date(event.date),
+							venue: competition.venue.full_name,
+							city: competition.venue.address.city,
+							state: competition.venue.address.state,
+							home: homeTeam.team.displayName,
+							visitor: visitingTeam.team.displayName,
+						}
+					]
+				}
+				
 			}
 		})
-		res.json(weeks);
+		const orderedWeeks = [];
+		for (let i=1; i<=18; i++) { //18 weeks of season
+			orderedWeeks.push({
+				week: i,
+				league: 'NFL',
+				year: req.params.year, 
+				in_playoffs: false,
+				competitions: weeks[i]
+			});
+		}
+		for (const week of orderedWeeks) {
+			await Week.create(week);
+		}
+		res.json(orderedWeeks);
     } catch (error) {
         next(error)
     }

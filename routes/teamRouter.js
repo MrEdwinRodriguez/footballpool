@@ -16,7 +16,7 @@ teamRouter.route('/')
 })
 .post(cors.corsWithOptions, verifyUser, async (req, res, next) => {
     try {
-        const newTeam = await  Team.create(req.body).populate('user').exec();
+        const newTeam = await Team.create(req.body).populate('user').exec();
         res.status(200).json(newTeam);
     } catch (error) {
         next(error)

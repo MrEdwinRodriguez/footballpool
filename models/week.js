@@ -3,17 +3,17 @@ const Schema = mongoose.Schema;
 
 const weekSchema = new Schema({
 	year: {type: Number, required: true,  defualt: new Date().getFullYear()},
-	league: {type: String, default: 'nfl', enum: ['nfl', 'ncaab']},
+	league: {type: String, default: 'NFL', enum: ['NFL', 'NCAAB']},
 	week: Number, //week of season
     is_playoffs: {type: Boolean, default: false},
-    schedule: [
+    competitions: [
         {
 			name: String,
 			shortName: String,
 			date: Date,
 			vanue: String,
-			City: String,
-			State: String,
+			city: String,
+			state: String,
 			visitor: String,
 			home: String,
             // visitor: {type: mongoose.Schema.Types.ObjectId, ref: 'team'}, //to be added later
