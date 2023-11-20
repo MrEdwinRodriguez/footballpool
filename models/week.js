@@ -14,10 +14,10 @@ const weekSchema = new Schema({
 			vanue: String,
 			city: String,
 			state: String,
-			visitor: String,
-			home: String,
-            // visitor: {type: mongoose.Schema.Types.ObjectId, ref: 'team'}, //to be added later
-            // home: {type: mongoose.Schema.Types.ObjectId, ref: 'team'},//to be added later
+			// visitor: String,
+			// home: String,
+            visitor: {type: Number, ref: 'team'}, //to be added later
+            home: {type: Number, ref: 'team'},//to be added later
             winner: {type: String, enum: ['visitor', 'home']},
             visitor_score: Number,
             home_score: Number,

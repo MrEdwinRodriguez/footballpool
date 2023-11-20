@@ -97,8 +97,8 @@ weekRouter.route('/schedule/:year')
 						venue: competition.venue.full_name,
 						city: competition.venue.address.city,
 						state: competition.venue.address.state,
-						home: homeTeam.team.displayName,
-						visitor: visitingTeam.team.displayName,
+						home: homeTeam.team.id,
+						visitor: visitingTeam.team.id,
 					})
 				} else {
 					weeks[event.week.number] = [
@@ -109,8 +109,8 @@ weekRouter.route('/schedule/:year')
 							venue: competition.venue.full_name,
 							city: competition.venue.address.city,
 							state: competition.venue.address.state,
-							home: homeTeam.team.displayName,
-							visitor: visitingTeam.team.displayName,
+							home: homeTeam.team.id,
+							visitor: visitingTeam.team.id,
 						}
 					]
 				}
