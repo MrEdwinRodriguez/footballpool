@@ -8,6 +8,7 @@ import Dashboard from './components/Dashboard';
 import { Counter } from './features/counter/Counter';
 import './App.css';
 import EliminatorMain from './features/eliminator/EliminatorMain';
+import UserRegisterForm from './features/user/UserRegisterForm';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
 			<Routes>
 				<Route path='/' element={<Dashboard/>}/>
 				<Route path='/eliminator' element={<EliminatorMain/>}/>
+				<Route path='/register' element={<UserRegisterForm />}/>
 			</Routes>
 			
 		</Container>

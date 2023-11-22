@@ -1,5 +1,6 @@
 import {useState} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import {Link} from 'react-router-dom';
 import { setCurrentUser, selectCurrentUser } from './userSlice';
 import { Modal, ModalHeader, ModalBody, FormGroup, Label, Button } from 'reactstrap';
 import { Formik, Field, Form } from 'formik';
@@ -76,6 +77,7 @@ const UserLoginForm = () => {
 								</Button>
 							</Form>
 						</Formik>
+						<Link to={`/register`} activeClassName="active" onClick={()=>setLoginModalOpen(false)}>Do not have an account? Register</Link>
 					</ModalBody>
 			</Modal>
 		</>
