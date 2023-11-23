@@ -1,7 +1,7 @@
 const express = require('express');
 const teamRouter = express.Router();
 const Team = require('../models/team');
-const {verifyUser, verifyAdminn } = require('../authenticate');
+const {verifyUser, verifyAdmin } = require('../authenticate');
 const cors = require('./cors');
 const fetch = require('node-fetch');
 

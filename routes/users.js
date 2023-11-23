@@ -10,9 +10,12 @@ router.get('/', cors.corsWithOptions, function(req, res, next) {
   res.send('respond with a resource');
 });
 
-router.post('/signup', cors.corsWithOptions, (req, res) => {
+
+router.route('/signup')
+.options(cors.corsWithOptions, (req, res) => res.sendStatus(200))
+.post(cors.corsWithOptions, async (req, res, next) => {
   User.register(
-      new User({username: req.body.username}),
+      new User(...req.body),
       req.body.password,
       err => {
           if (err) {
@@ -31,10 +34,13 @@ router.post('/signup', cors.corsWithOptions, (req, res) => {
 });
 
 router.post('/login', cors.corsWithOptions, passport.authenticate('local'), (req, res) => {
-  const token = authenticate.getToken({_id: req.user._id});
-  res.statusCode = 200;
-  res.setHeader('Content-Type', 'application/json');
-  res.json({success: true, token: token, status: 'You are successfully logged in!'});
+	const token = authenticate.getToken({_id: req.user._id});
+	const user = await User.findById(req.user._id).exec();
+	user.last_login = new Date();
+	await user.save();
+	res.statusCode = 200;
+	res.setHeader('Content-Type', 'application/json');
+	res.json({success: true, token: token, status: 'You are successfully logged in!'});
 });
 
 router.get('/logout', cors.corsWithOptions, (req, res, next) => {

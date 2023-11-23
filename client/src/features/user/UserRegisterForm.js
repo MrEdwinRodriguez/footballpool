@@ -1,34 +1,49 @@
-import React from 'react';
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { setCurrentUser, selectCurrentUser } from './userSlice';
+import { Link, useNavigate, Navigate } from 'react-router-dom';
+import { setCurrentUser, selectCurrentUser, registerUser  } from './userSlice';
 import { Modal, ModalHeader, ModalBody, FormGroup, Label, Button, Row, Col, Input} from 'reactstrap';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import {  validateUserRegistration } from '../../utils/validateUserForms'
 
 
 const UserRegisterForm = () => {
-	const [loginModalOpen, setLoginModalOpen] = useState(false);
+	const [success, toggleSuccess] = useState(false);
+	const [showSuccess, setShowSuccess] = useState(false);
 	const currentUser = useSelector(selectCurrentUser);
 	const dispatch = useDispatch();
-	const handleLogin = (values) => {
+	const navigation = useNavigate()
+	const handleLogin = async (values) => {
 		const newUser = {
 			first_name: values.first_name,
 			last_name: values.last_name,
 			username: values.username,
 			password: values.password,
 			password2: values.password2,
-			terms: values.terms
+			terms: values.toggle
 		};
-		console.log('line 22', newUser)
-		// dispatch(setCurrentUser(currentUser));
+		const response  = await dispatch(registerUser(newUser));
+		console.log(response.payload)
+		if (response && response.payload === 'success') {
+			toggleSuccess(true);
+			setTimeout(()=> {
+				navigation('/')
+			}, 2000)
+			
+		}
 	}
+	useEffect(() => {
+		setShowSuccess(success)
+	}, [success])
 	return (
 		<>
 			<h2>Register</h2>
 			<hr/>
 			<br></br>
+			{showSuccess && <div class="alert alert-success" role="alert">
+				A simple success alert—check it out!
+			</div>}
+			{!showSuccess &&
 			<Formik
 				initialValues = {{
 					username: "",
@@ -36,7 +51,7 @@ const UserRegisterForm = () => {
 					password2:"",
 					first_name: "",
 					last_name: "",
-					terms: false
+					toggle: false
 				}}
 				onSubmit={handleLogin}
 				validate={validateUserRegistration}
@@ -124,7 +139,7 @@ const UserRegisterForm = () => {
 					<Row>
 						<Col>
 							<FormGroup>
-								<Input type="checkbox" id='terms' name="terms" /> <Label>I agree to terms and conditions.</Label>
+								<Field type="checkbox" id='terms' name="toggle" /> <Label>I agree to terms and conditions.</Label>
 								<ErrorMessage name='terms'>
 									{(msg) => <p className='text-danger'>{msg}</p>}
 								</ErrorMessage>
@@ -138,6 +153,7 @@ const UserRegisterForm = () => {
 					</Button>
 				</Form>
 			</Formik>
+			}
 		</>
 	)
 }

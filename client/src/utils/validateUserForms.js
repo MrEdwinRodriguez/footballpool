@@ -24,7 +24,7 @@ export const validateUserRegistration = (values) => {
 		errors.password2 = 'Retype Password must match Passowrd';
 	}
 
-	if(!values.terms) {
+	if(!values.toggle) {
 		errors.terms = "Required"
 	}
 	console.log(errors)
