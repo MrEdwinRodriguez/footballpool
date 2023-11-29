@@ -70,6 +70,14 @@ weekRouter.route('/:weekId')
 
 weekRouter.route('/schedule/:year')
 .options(cors.corsWithOptions, (req, res) => res.sendStatus(200))
+.get(cors.cors, async (req, res, next) => {
+    try {
+        const aWeeks = await Week.find({week: req.params.year}).populate('user').exec();
+        res.status(200).json(aWeeks);
+    } catch (error) {
+        next(error)
+    }
+})
 .post(cors.cors, async (req, res, next) => {
     try {
 		const url = `https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard?limit=1000&dates=${req.params.year}`;

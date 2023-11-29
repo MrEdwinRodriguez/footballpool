@@ -9,6 +9,7 @@ import { Counter } from './features/counter/Counter';
 import './App.css';
 import EliminatorMain from './features/eliminator/EliminatorMain';
 import UserRegisterForm from './features/user/UserRegisterForm';
+import WeeklyPoolMain from './features/weeklypool/WeeklyPoolMain';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
 				<Route path='/' element={<Dashboard/>}/>
 				<Route path='/eliminator' element={<EliminatorMain/>}/>
 				<Route path='/register' element={<UserRegisterForm />}/>
+				<Route path='/footballpool' element={<WeeklyPoolMain />}/>
 			</Routes>
 			
 		</Container>
