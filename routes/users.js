@@ -33,7 +33,7 @@ router.route('/signup')
   );
 });
 
-router.post('/login', cors.corsWithOptions, passport.authenticate('local'), (req, res) => {
+router.post('/login', cors.corsWithOptions, passport.authenticate('local'), async (req, res) => {
 	const token = authenticate.getToken({_id: req.user._id});
 	const user = await User.findById(req.user._id).exec();
 	user.last_login = new Date();

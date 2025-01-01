@@ -2,6 +2,50 @@ body {
     font-family: 'Open Sans', sans-serif;
 }
 
+/* generic use */
+.font-size-100 {
+    font-size: 100px;
+}
+
+/* Main Colors */
+.color-one {
+    color: "#3788ca";
+}
+.cw {
+    color: "#fff" !important;
+}
+
+
+.right {
+    /* text-align: right; */
+    position: relative;
+    right: 0%;
+    max-height: 100px;
+}
+
+.center {
+    text-align: center;
+}
+
+.margin-top-30 {margin-top: 30px;}
+.margin-top-70 { margin-top: 70px !important;}
+
+
+
+
+/* dashboard */
+.dashboard-football {
+    padding-left: 100px;
+    float: right;
+    max-height: 100px !important;
+    object-fit: contain;
+}
+.dashboard-helmet {
+    width: 200px;
+    object-fit: contain;
+}
+
+
 h1,
 h2,
 h3,
@@ -55,8 +99,8 @@ h2 {
 }
 
 .navbar-dark {
-    background-color: #901cad;
-    background-image: linear-gradient(to right, #5637dd, #3046c5, #510e5a);
+    background-color: #3788ca;
+    background-image: linear-gradient(to right, #103783, #9bafd9);
     margin-bottom: 2rem;
     min-height: 8rem;
 }
@@ -80,3 +124,4 @@ h2 {
     opacity: 0;
     transition: 300ms ease-in;
 }
+
