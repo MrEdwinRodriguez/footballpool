@@ -55,6 +55,22 @@ const Dashboard = () => {
 			</Col>
 			<Col md="3"><img src={RedHelmet} alt='nucamp logo' className='float-start dashboard-helmet' /></Col>
 		</Row>
+		<Row>
+			<Col sm="3"></Col>
+			<Col sm="6">
+				<NavLink className='nav-link' to='/mypools'>
+					<Card>
+						<CardBody>
+							<CardTitle tag="h5" className="center cw">
+							<i class="fa fa-th-list" aria-hidden="true"></i> My Pools
+							</CardTitle>
+						</CardBody>
+					</Card>
+				</NavLink>
+			
+			</Col>
+			<Col sm="3"></Col>
+		</Row>
 		{/* <Card style={{margin: "auto", width: "50%"}}>
 			<CardBody>
 			<img className='wide' alt="Sample" src="https://cdn.fantasypros.com/wp-content/images/full_132220/716x326.jpg"/>

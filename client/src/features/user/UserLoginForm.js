@@ -77,7 +77,7 @@ const UserLoginForm = () => {
 								</Button>
 							</Form>
 						</Formik>
-						<Link to={`/register`} activeClassName="active" onClick={()=>setLoginModalOpen(false)}>Do not have an account? Register</Link>
+						<Link to={`/register`} ClassName="active" onClick={()=>setLoginModalOpen(false)}>Do not have an account? Register</Link>
 					</ModalBody>
 			</Modal>
 		</>

@@ -12,6 +12,7 @@ import EliminatorMain from './features/eliminator/EliminatorMain';
 import UserRegisterForm from './features/user/UserRegisterForm';
 import WeeklyPoolMain from './features/weeklypool/WeeklyPoolMain';
 import Create from './features/create/Create';
+import MyPools from './features/my_pools/MyPools';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
 			<Routes>
 				<Route path='/' element={<Dashboard/>}/>
 				<Route path='/eliminator' element={<EliminatorMain/>}/>
+				<Route path='/mypools' element={<MyPools/>}/>
 				<Route path='/register' element={<UserRegisterForm />}/>
 				<Route path='/footballpool' element={<WeeklyPoolMain />}/>
 				<Route path='/create' element={<Create />}/>
