@@ -9,6 +9,7 @@ import {
 } from 'reactstrap';
 import { NavLink } from 'react-router-dom';
 import NucampLogo from '../logo.svg';
+import LogoText from '../app/assets/img/logo-text.png';
 import UserLoginForm from '../features/user/UserLoginForm';
 
 
@@ -17,10 +18,12 @@ const Header = () => {
 
     return (
         <Navbar dark color='primary' sticky='top' expand='md'>
-            <NavbarBrand className='ms-5' href='/'>
-                <img src={NucampLogo} alt='nucamp logo' className='float-start' />
-                <h1 className='mt-1'>My Office Pool</h1>
-            </NavbarBrand>
+            <div className='ms-5' href='/'>
+                <NavLink className='nav-link' to='/'>
+                    <img src={LogoText} alt='nucamp logo' className='float-start logo-long' />
+                </NavLink>
+                {/* <h1 className='mt-1'>Play Book Picks</h1> */}
+            </div>
             
             <NavbarToggler onClick={() => setMenuOpen(!menuOpen)} />
             <Collapse isOpen={menuOpen} navbar>

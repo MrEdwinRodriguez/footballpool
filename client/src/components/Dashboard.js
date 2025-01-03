@@ -25,7 +25,7 @@ const Dashboard = () => {
 		<Row>
 			{/* <Col md="3 "><img src={Football} alt='nucamp logo' className='float-start dashboard-football right ' /></Col> */}
 			<Col md="3"></Col>
-			<Col md="6"><h1 className='font-size-100 center'>My Office Pool</h1></Col>
+			<Col md="6"><h1 className='font-size-100 center'>Play Book Picks</h1></Col>
 			<Col md="3"></Col>
 			{/* <Col md="3"><img src={Football} alt='nucamp logo' className='float-start dashboard-football' /></Col> */}
 		</Row>
@@ -43,7 +43,7 @@ const Dashboard = () => {
 				</NavLink>
 			</Col>
 			<Col md="3" className="margin-top-70">
-				<NavLink className='nav-link' to='/mygames'>
+				<NavLink className='nav-link' to='/joinpool'>
 					<Card style={{margin: "auto"}}>
 						<CardBody>
 							<CardTitle tag="h5" className="center cw">

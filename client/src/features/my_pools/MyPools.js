@@ -1,6 +1,6 @@
 import CommonTable from "../common/CommonTable";
+import { NavLink } from 'react-router-dom';
 
-import React from 'react'
 
 function MyPools() {
     const tableHeaders = ["#", "Name", "League", "Week", "Entry", "Contestants", "Pool Total", "Outcome"];

@@ -20,6 +20,7 @@ const Create = () => {
 			max_contenstants: values.max_contenstants,
 			is_private: values.is_private,
 			terms: values.terms,
+			allow_late_payments: values.allow_late_payments
 		};
 		// const response  = await dispatch(registerUser(newUser));
 		// console.log(response.payload)
@@ -51,7 +52,8 @@ const Create = () => {
 					is_private: true,
 					cost: 5,
 					max_contenstants: 100,
-                    is_private: false
+                    is_private: false,
+					allow_late_payments: false
 				}}
 				onSubmit={handleLogin}
 				validate={validateCreateConstest}
@@ -117,6 +119,17 @@ const Create = () => {
 							</FormGroup>
 						</Col>
 						<Col sm="6"></Col>
+					</Row>
+					<Row>
+						<Col >
+							<FormGroup>
+								<Field type="checkbox" id='allow_late_payments' name="allow_late_payments" /> <Label>Allow Late Payments.</Label>
+								<ErrorMessage name='allow_late_payments'>
+									{(msg) => <p className='text-danger'>{msg}</p>}
+								</ErrorMessage>
+							</FormGroup>
+						</Col>
+						
 					</Row>
 					<Row>
 						<Col sm="6">

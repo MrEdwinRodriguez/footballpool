@@ -13,6 +13,9 @@ import UserRegisterForm from './features/user/UserRegisterForm';
 import WeeklyPoolMain from './features/weeklypool/WeeklyPoolMain';
 import Create from './features/create/Create';
 import MyPools from './features/my_pools/MyPools';
+import JoinPoolList from './features/join_pool/JoinPoolList';
+import PoolInfo from './features/join_pool/PoolInfo';
+import Pool from './features/my_pools/Pool';
 
 function App() {
   return (
@@ -23,6 +26,9 @@ function App() {
 				<Route path='/' element={<Dashboard/>}/>
 				<Route path='/eliminator' element={<EliminatorMain/>}/>
 				<Route path='/mypools' element={<MyPools/>}/>
+				<Route path='/mypool/:id' element={<Pool/>}/>
+				<Route path='/joinpool' element={<JoinPoolList/>}/>
+				<Route path='/join/:id' element={<PoolInfo/>}/>
 				<Route path='/register' element={<UserRegisterForm />}/>
 				<Route path='/footballpool' element={<WeeklyPoolMain />}/>
 				<Route path='/create' element={<Create />}/>
