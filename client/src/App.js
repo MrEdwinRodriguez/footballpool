@@ -16,6 +16,7 @@ import MyPools from './features/my_pools/MyPools';
 import JoinPoolList from './features/join_pool/JoinPoolList';
 import PoolInfo from './features/join_pool/PoolInfo';
 import Pool from './features/my_pools/Pool';
+import MakePicks from './features/my_pools/MakePicks';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
 				<Route path='/eliminator' element={<EliminatorMain/>}/>
 				<Route path='/mypools' element={<MyPools/>}/>
 				<Route path='/mypool/:id' element={<Pool/>}/>
+				<Route path='/makepicks/:id' element={<MakePicks/>}/>
 				<Route path='/joinpool' element={<JoinPoolList/>}/>
 				<Route path='/join/:id' element={<PoolInfo/>}/>
 				<Route path='/register' element={<UserRegisterForm />}/>

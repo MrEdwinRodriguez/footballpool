@@ -15,6 +15,22 @@ body {
     color: "#fff" !important;
 }
 
+.mb-10 {
+    margin-bottom: 10px !important;
+}
+
+.topcorner {
+    position:absolute;
+    top:10;
+    right:0;
+}
+
+
+/* toast timer gradient */
+:root {
+    --toastify-color-progress-light: linear-gradient(to right,  #103783, #103783, #9bafd9, #9bafd9);
+}
+
 
 .right {
     /* text-align: right; */
@@ -31,6 +47,29 @@ body {
     color: red;
 }
 
+
+.btn-wide {
+    width: 100% !important;
+}
+
+.btn-default {
+    color: #333;
+    background-color: #fff;
+    border-color: #ccc;
+    padding: 6px 12px;
+    border-style: solid;
+    border-width: 1px;
+}
+
+input {
+ display: none;
+}
+
+input:checked + label{
+    color: #fff;
+    background-color: #103783;
+    border-color: #103783;
+}
 .margin-top-30 {margin-top: 30px;}
 .margin-top-70 { margin-top: 70px !important;}
 
@@ -132,4 +171,3 @@ h2 {
     opacity: 0;
     transition: 300ms ease-in;
 }
-

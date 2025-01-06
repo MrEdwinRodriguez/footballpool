@@ -14,7 +14,8 @@ function MyPools() {
 			entry: "$5",
 			contestants: "35",
 			pool_total: "$175",
-			outcome: 1
+			outcome: 1,
+			is_submitted: true
 		},
 		{
 			_id: 2,
@@ -24,7 +25,8 @@ function MyPools() {
 			entry: "$5",
 			contestants: "20",
 			pool_total: "$100",
-			outcome: 8
+			outcome: 8,
+			is_submitted: true
 		},
 		{
 			_id: 3,
@@ -34,7 +36,8 @@ function MyPools() {
 			entry: "$5",
 			contestants: "20",
 			pool_total: "$100",
-			outcome: "Pending"
+			outcome: "Pending",
+			is_submitted: false
 		}
 	]
     

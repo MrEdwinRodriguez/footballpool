@@ -23,7 +23,6 @@ const Pool = () => {
     const { id } = useParams();
     return (
         <>
-            Pool: {id}
             {/* summary table */}
             <Row> 
                 <Col  xs="2"></Col>

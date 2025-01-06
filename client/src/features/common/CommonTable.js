@@ -22,7 +22,8 @@ const CommonTable = ({tableHeaders, rows}) => {
 								{row._id}
 							</th>
 							<td>
-								<Link className='nav-link' to={`/mypool/${row._id}`}>{row.name}</Link>
+								{row.is_submitted ? <Link className='nav-link' to={`/mypool/${row._id}`}>{row.name}</Link> : <Link className='nav-link' to={`/makepicks/${row._id}`}>{row.name}</Link>}
+				
 							</td>
 							<td>
 								{row.league}
