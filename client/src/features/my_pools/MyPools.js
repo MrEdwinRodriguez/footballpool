@@ -1,5 +1,6 @@
 import CommonTable from "../common/CommonTable";
 import { NavLink } from 'react-router-dom';
+import { Row, Col } from "reactstrap";
 
 
 function MyPools() {
@@ -37,11 +38,29 @@ function MyPools() {
 		}
 	]
     
-  return (
-    <div>
-      <CommonTable rows={rows} tableHeaders={tableHeaders}></CommonTable>
-    </div>
-  )
+	if (rows && rows.length > 0) {
+		return (
+		  <div>
+			<CommonTable rows={rows} tableHeaders={tableHeaders}></CommonTable>
+		  </div>
+		)
+	} else {
+		return (
+			<Row>
+				<Col sm="3"></Col>
+				<Col className="center">
+					<h1>You Have Not Joined Any Pools.</h1>
+					<Row>
+						<Col><NavLink className='nav-link' to={`/create`}>Create Pool</NavLink></Col>
+						<Col><NavLink className='nav-link' to={`/joinpool`}>Join Pool</NavLink></Col>
+					</Row>
+					
+					
+				</Col>
+				<Col sm="3"></Col>
+			</Row>
+		)
+	}
 }
 
 export default MyPools

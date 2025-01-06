@@ -5,7 +5,8 @@ import { Table, Row, Col } from 'reactstrap';
 const Pool = () => {
     const poolObj = {
         wins: 2,
-        losses: 3,
+        losses: 2,
+		total: 8,
         standing: "21/40",
         status: "Active",
         picks: [
@@ -16,7 +17,7 @@ const Pool = () => {
             { away: "Lion", home: "Packers", outcome: "Pending", pick: "Packers" },
             { away: "Bears", home: "Vikings", outcome: "Pending", pick: "Bears" },
             { away: "Rams", home: "Seahawks", outcome: "Pending", pick: "Bears" },
-            { away: "49ers", home: "Cardinals", outcome: "L", pick: "49ers" }
+            { away: "49ers", home: "Cardinals", outcome: "Pending", pick: "49ers" }
         ]
     }
     const { id } = useParams();
@@ -40,7 +41,7 @@ const Pool = () => {
                                 Remaining
                             </th>
                             <th className='center'>
-                                Standing
+                                Ranking
                             </th>
                             <th className='center'>
                                 Status
@@ -82,7 +83,7 @@ const Pool = () => {
             <Row>
                 <Col  xs="2"></Col>
                 <Col>
-                <h1 className='center'>Picks</h1>
+                <h1 className='center'>My Picks</h1>
                     <Table >
                         <thead>
                             <tr>
@@ -99,12 +100,15 @@ const Pool = () => {
                                 Outcome
                             </th>
                             </tr>
+
                         </thead>
                         <tbody>
                             {
                                 poolObj.picks.map(pick => {
+									let status = null;
+									if (pick.outcome === "L" || pick.outcome === "W") status = pick.outcome;
                                     return (
-                                        <tr className={pick.outcome === "L" ? "table-danger" : ""}>
+                                        <tr className={pick.outcome === "W" ? "table-success" : ""}>
                                             <th>
                                                 {pick.away}
                                             </th>
@@ -112,12 +116,12 @@ const Pool = () => {
                                             <td>
                                                 {pick.home}
                                             </td>
-                                            <td className='center'>
-                                                {pick.outcome}
-                                            </td>
-                                            <td>
-                                                {pick.status}
-                                            </td>
+
+											<td className='center'>
+												{status && pick.outcome === "L" ? <i class="fa fa-times wrong" aria-hidden="true"></i> : ""}
+												{status && pick.outcome === "W" ? <i class="fa fa-check" aria-hidden="true"></i> : ""}
+												{!status ? "Pending" : ""}
+											</td>
                                         </tr>
                                     )
                                 })
