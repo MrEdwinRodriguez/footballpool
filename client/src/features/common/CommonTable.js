@@ -35,7 +35,7 @@ const CommonTable = ({tableHeaders, rows}) => {
 								{row.entry}
 							</td>
 							<td>
-								{row.contestants}
+								{row.is_submitted ? <Link className='nav-link' to={`/mypool/entries/${row._id}`}>{row.contestants}</Link> : <Link className='nav-link' to={`/makepicks/${row._id}`}>{row.contestants}</Link>}
 							</td>
 							<td>
 								{row.pool_total}

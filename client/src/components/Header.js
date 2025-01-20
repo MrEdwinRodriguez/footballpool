@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import {
     Navbar,
     NavbarBrand,
@@ -12,10 +13,11 @@ import NucampLogo from '../logo.svg';
 import LogoText from '../app/assets/img/logo-text.png';
 import UserLoginForm from '../features/user/UserLoginForm';
 
+import { selectCurrentUser } from '../features/user/userSlice';
 
 const Header = () => {
     const [menuOpen, setMenuOpen] = useState(false);
-
+    const currentUser = useSelector(selectCurrentUser);
     return (
         <Navbar dark color='primary' sticky='top' expand='md'>
             <div className='ms-5' href='/'>
@@ -43,6 +45,14 @@ const Header = () => {
                             <i className='fa fa-info fa-lg' /> Find Games
                         </NavLink>
                     </NavItem>
+                    {currentUser ? (
+						<NavItem>
+							<NavLink className='nav-link' to='/findgames'>
+								<i class="fa fa-user" aria-hidden="true"></i> My Profile
+							</NavLink>
+						</NavItem>
+                    	) : ( "")
+					}
                 </Nav>
 				<UserLoginForm/>
             </Collapse>
