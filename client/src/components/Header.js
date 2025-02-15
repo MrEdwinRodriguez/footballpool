@@ -45,6 +45,14 @@ const Header = () => {
                             <i className='fa fa-info fa-lg' /> Find Games
                         </NavLink>
                     </NavItem>
+	
+						<NavItem>
+							<NavLink className='nav-link' to='/comishtools'>
+								<i class="fa fa-sitemap"></i> Commissioner Tools
+							</NavLink>
+						</NavItem>
+             
+
                     {currentUser ? (
 						<NavItem>
 							<NavLink className='nav-link' to='/findgames'>
